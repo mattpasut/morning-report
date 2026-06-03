@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --border: #2e2c28;
+    --accent: #e8c547;
+    --accent-dim: #b89d30;
+    --text: #f0ede6;
+    --muted: #7a7568;
+    --success: #4caf7d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(232,197,71,0.08) 0%, transparent 60%);
+  }
+
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+
+  .header-label {
+    flex: 1;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .date-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: fadeUp 0.5s ease both;
+  }
+  .field:nth-child(1) { animation-delay: 0.05s; }
+  .field:nth-child(2) { animation-delay: 0.1s; }
+  .field:nth-child(3) { animation-delay: 0.15s; }
+
+  label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .prefix {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    color: var(--accent);
+    pointer-events: none;
+  }
+
+  input[type="number"],
+  textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+  input[type="number"] {
+    padding: 0.85rem 1rem 0.85rem 2.4rem;
+  }
+
+  input[type="number"].no-prefix {
+    padding-left: 1rem;
+  }
+
+  textarea {
+    padding: 0.85rem 1rem;
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.6;
+    font-size: 0.9rem;
+  }
+
+  input:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(232,197,71,0.1);
+  }
+
+  .hint {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.25rem 0;
+  }
+
+  .card-footer {
+    padding: 0 2rem 2rem;
+  }
+
+  button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent);
+    color: #0f0e0c;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button:hover { background: #f0d060; }
+  button:active { transform: scale(0.99); }
+
+  button.loading {
+    pointer-events: none;
+    background: var(--accent-dim);
+  }
+
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,12,0.92);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .success-overlay.show { display: flex; }
+
+  .check {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .success-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+  }
+
+  .success-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .reset-btn {
+    margin-top: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1.4rem;
+    width: auto;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <div class="header-label">
+      <div class="eyebrow">Daily Entry</div>
+      <h1>Morning<br>Report</h1>
+    </div>
+    <div class="date-badge" id="dateBadge"></div>
+  </div>
+
+  <div class="card-body">
+    <div class="field">
+      <label>Artwork Tickets</label>
+      <div class="input-wrap">
+        <input type="number" id="artworkTickets" class="no-prefix" min="0" placeholder="0">
+      </div>
+      <span class="hint">Total open artwork tickets this morning</span>
+    </div>
+
+    <div class="field">
+      <label>Cash on Hand</label>
+      <div class="input-wrap">
+        <span class="prefix">$</span>
+        <input type="number" id="cashOnHand" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <span class="hint">Current cash in drawer / on site</span>
+    </div>
+
+    <div class="field">
+      <label>Complaints / Reprints</label>
+      <div class="input-wrap">
+        <textarea id="complaints" placeholder="Describe any complaints or reprint requests…"></textarea>
+      </div>
+      <span class="hint">Leave blank if none</span>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button id="submitBtn" onclick="handleSubmit()">Submit Report</button>
+  </div>
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="check">✓</div>
+  <div class="success-title">Report Submitted</div>
+  <div class="success-sub" id="successTime"></div>
+  <button class="reset-btn" onclick="resetForm()">Submit Another</button>
+</div>
+
+<script>
+  // Set date badge
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('dateBadge').innerHTML =
+    `${days[now.getDay()]}<br>${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+  function handleSubmit() {
+    const artwork = document.getElementById('artworkTickets').value;
+    const cash = document.getElementById('cashOnHand').value;
+    const complaints = document.getElementById('complaints').value.trim();
+
+    // Basic validation
+    if (artwork === '' || cash === '') {
+      const emptyField = artwork === '' ? 'artworkTickets' : 'cashOnHand';
+      document.getElementById(emptyField).focus();
+      document.getElementById(emptyField).style.borderColor = '#e05c5c';
+      setTimeout(() => document.getElementById(emptyField).style.borderColor = '', 1500);
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.textContent = 'Submitting…';
+
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT6asngaaLPrb2Z_oQmc8j-8XW9f2X13UVz1Vph6yla0FIvT_fEHDwQOREejNkEntj/exec';
+
+    const payload = {
+      timestamp: new Date().toISOString(),
+      artworkTickets: parseInt(artwork),
+      cashOnHand: parseFloat(cash).toFixed(2),
+      complaints: complaints || 'None'
+    };
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      btn.classList.remove('loading');
+      btn.textContent = 'Submit Report';
+      const t = new Date();
+      document.getElementById('successTime').textContent =
+        `Logged at ${t.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+      document.getElementById('successOverlay').classList.add('show');
+    })
+    .catch(err => {
+      btn.classList.remove('loading');
+      btn.textContent = 'Submit Report';
+      alert('Submission failed — check your connection and try again.\n\n' + err.message);
+    });
+  }
+
+  function resetForm() {
+    document.getElementById('artworkTickets').value = '';
+    document.getElementById('cashOnHand').value = '';
+    document.getElementById('complaints').value = '';
+    document.getElementById('successOverlay').classList.remove('show');
+  }
+</script>
+</body>
+</html>
