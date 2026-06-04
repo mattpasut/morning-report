@@ -100,6 +100,7 @@
   .field:nth-child(1) { animation-delay: 0.05s; }
   .field:nth-child(2) { animation-delay: 0.1s; }
   .field:nth-child(3) { animation-delay: 0.15s; }
+  .field:nth-child(4) { animation-delay: 0.2s; }
 
   label {
     font-size: 0.72rem;
@@ -292,6 +293,14 @@
     </div>
 
     <div class="field">
+      <label>Website Inquiries</label>
+      <div class="input-wrap">
+        <input type="number" id="websiteInquiries" class="no-prefix" min="0" placeholder="0">
+      </div>
+      <span class="hint">Total website inquiries received</span>
+    </div>
+
+    <div class="field">
       <label>Complaints / Reprints</label>
       <div class="input-wrap">
         <textarea id="complaints" placeholder="Describe any complaints or reprint requests…"></textarea>
@@ -345,7 +354,8 @@
       timestamp: new Date().toISOString(),
       artworkTickets: parseInt(artwork),
       cashOnHand: parseFloat(cash).toFixed(2),
-      complaints: complaints || 'None'
+      complaints: complaints || 'None',
+      websiteInquiries: parseInt(document.getElementById('websiteInquiries').value) || 0
     };
 
     fetch(APPS_SCRIPT_URL, {
@@ -372,6 +382,7 @@
   function resetForm() {
     document.getElementById('artworkTickets').value = '';
     document.getElementById('cashOnHand').value = '';
+    document.getElementById('websiteInquiries').value = '';
     document.getElementById('complaints').value = '';
     document.getElementById('successOverlay').classList.remove('show');
   }
