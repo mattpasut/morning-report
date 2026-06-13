@@ -27,14 +27,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(232,197,71,0.08) 0%, transparent 60%);
+    padding: 2rem 1rem;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(232,197,71,0.08) 0%, transparent 60%);
   }
 
   .card {
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
@@ -47,16 +46,14 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* ── HEADER ── */
   .card-header {
     padding: 2rem 2rem 1.5rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: flex-end;
+    justify-content: space-between;
     gap: 1rem;
-  }
-
-  .header-label {
-    flex: 1;
   }
 
   .eyebrow {
@@ -84,44 +81,64 @@
     line-height: 1.6;
   }
 
-  .card-body {
-    padding: 2rem;
+  /* ── SECTIONS ── */
+  .form-section {
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .form-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── FIELDS ── */
+  .fields {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
   .field {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    animation: fadeUp 0.5s ease both;
+    gap: 0.45rem;
   }
-  .field:nth-child(1) { animation-delay: 0.05s; }
-  .field:nth-child(2) { animation-delay: 0.1s; }
-  .field:nth-child(3) { animation-delay: 0.15s; }
-  .field:nth-child(4) { animation-delay: 0.2s; }
 
   label {
-    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
-    font-family: 'DM Mono', monospace;
   }
 
-  .input-wrap {
-    position: relative;
-  }
+  .input-wrap { position: relative; }
 
   .prefix {
     position: absolute;
-    left: 1rem;
+    left: 0.9rem;
     top: 50%;
     transform: translateY(-50%);
     font-family: 'DM Mono', monospace;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--accent);
     pointer-events: none;
   }
@@ -134,9 +151,9 @@
     border-radius: 3px;
     color: var(--text);
     font-family: 'DM Mono', monospace;
-    font-size: 1rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 0.95rem;
     outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
     -moz-appearance: textfield;
   }
 
@@ -144,41 +161,36 @@
   input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
   input[type="number"] {
-    padding: 0.85rem 1rem 0.85rem 2.4rem;
+    padding: 0.75rem 0.9rem 0.75rem 2.2rem;
   }
 
   input[type="number"].no-prefix {
-    padding-left: 1rem;
+    padding-left: 0.9rem;
   }
 
   textarea {
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 0.9rem;
     resize: vertical;
-    min-height: 90px;
+    min-height: 80px;
     line-height: 1.6;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   input:focus, textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(232,197,71,0.1);
+    box-shadow: 0 0 0 3px rgba(232,197,71,0.08);
   }
 
   .hint {
-    font-size: 0.7rem;
-    color: var(--muted);
     font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
     letter-spacing: 0.03em;
   }
 
-  .divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0.25rem 0;
-  }
-
+  /* ── FOOTER ── */
   .card-footer {
-    padding: 0 2rem 2rem;
+    padding: 1.5rem 2rem 2rem;
   }
 
   button {
@@ -193,18 +205,13 @@
     letter-spacing: 0.12em;
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
-    position: relative;
-    overflow: hidden;
   }
 
   button:hover { background: #f0d060; }
   button:active { transform: scale(0.99); }
+  button.loading { pointer-events: none; background: var(--accent-dim); }
 
-  button.loading {
-    pointer-events: none;
-    background: var(--accent-dim);
-  }
-
+  /* ── SUCCESS ── */
   .success-overlay {
     display: none;
     position: fixed;
@@ -215,7 +222,6 @@
     flex-direction: column;
     gap: 1rem;
     z-index: 100;
-    animation: fadeUp 0.3s ease both;
   }
 
   .success-overlay.show { display: flex; }
@@ -261,60 +267,99 @@
   }
 
   .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 480px) {
+    body { padding: 0; }
+    .card { border-radius: 0; }
+    .field-row { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  }
 </style>
 </head>
 <body>
 
 <div class="card">
+
   <div class="card-header">
-    <div class="header-label">
+    <div>
       <div class="eyebrow">Daily Entry</div>
       <h1>Morning<br>Report</h1>
     </div>
     <div class="date-badge" id="dateBadge"></div>
   </div>
 
-  <div class="card-body">
-    <div class="field">
-      <label>Artwork Tickets</label>
-      <div class="input-wrap">
-        <input type="number" id="artworkTickets" class="no-prefix" min="0" placeholder="0">
-      </div>
-      <span class="hint">Total open artwork tickets this morning</span>
-    </div>
+  <!-- DAILY METRICS -->
+  <div class="form-section">
+    <div class="section-title">Daily Metrics</div>
+    <div class="fields">
 
-    <div class="field">
-      <label>Cash on Hand</label>
-      <div class="input-wrap">
-        <span class="prefix">$</span>
-        <input type="number" id="cashOnHand" min="0" step="0.01" placeholder="0.00">
+      <div class="field-row">
+        <div class="field">
+          <label>Artwork Tickets</label>
+          <div class="input-wrap">
+            <input type="number" id="artworkTickets" class="no-prefix" min="0" placeholder="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Website Inquiries</label>
+          <div class="input-wrap">
+            <input type="number" id="websiteInquiries" class="no-prefix" min="0" placeholder="0">
+          </div>
+        </div>
       </div>
-      <span class="hint">Current cash in drawer / on site</span>
-    </div>
 
-    <div class="field">
-      <label>Website Inquiries</label>
-      <div class="input-wrap">
-        <input type="number" id="websiteInquiries" class="no-prefix" min="0" placeholder="0">
+      <div class="field">
+        <label>Cash on Hand</label>
+        <div class="input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="cashOnHand" min="0" step="0.01" placeholder="0.00">
+        </div>
       </div>
-      <span class="hint">Total website inquiries received</span>
-    </div>
 
-    <div class="field">
-      <label>Complaints / Reprints</label>
-      <div class="input-wrap">
-        <textarea id="complaints" placeholder="Describe any complaints or reprint requests…"></textarea>
+      <div class="field">
+        <label>Complaints / Reprints</label>
+        <div class="input-wrap">
+          <textarea id="complaints" placeholder="Describe any complaints or reprint requests…"></textarea>
+        </div>
       </div>
-      <span class="hint">Leave blank if none</span>
+
+    </div>
+  </div>
+
+  <!-- WEEKLY METRICS -->
+  <div class="form-section">
+    <div class="section-title">Weekly Metrics (Wednesday)</div>
+    <div class="fields">
+
+      <div class="field">
+        <label>Large Order Followups Completed</label>
+        <div class="input-wrap">
+          <input type="number" id="largeOrderFollowups" class="no-prefix" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>60 Day Receivables</label>
+        <div class="input-wrap">
+          <textarea id="receivables60Day" placeholder="List any outstanding 60 day receivables…"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Overtime Hours</label>
+        <div class="input-wrap">
+          <textarea id="overtimeHours" placeholder="Note any overtime hours worked this week…"></textarea>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <div class="card-footer">
     <button id="submitBtn" onclick="handleSubmit()">Submit Report</button>
   </div>
+
 </div>
 
-<!-- Success overlay -->
 <div class="success-overlay" id="successOverlay">
   <div class="check">✓</div>
   <div class="success-title">Report Submitted</div>
@@ -323,19 +368,18 @@
 </div>
 
 <script>
-  // Set date badge
   const now = new Date();
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   document.getElementById('dateBadge').innerHTML =
     `${days[now.getDay()]}<br>${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT6asngaaLPrb2Z_oQmc8j-8XW9f2X13UVz1Vph6yla0FIvT_fEHDwQOREejNkEntj/exec';
+
   function handleSubmit() {
     const artwork = document.getElementById('artworkTickets').value;
-    const cash = document.getElementById('cashOnHand').value;
-    const complaints = document.getElementById('complaints').value.trim();
+    const cash    = document.getElementById('cashOnHand').value;
 
-    // Basic validation
     if (artwork === '' || cash === '') {
       const emptyField = artwork === '' ? 'artworkTickets' : 'cashOnHand';
       document.getElementById(emptyField).focus();
@@ -348,14 +392,15 @@
     btn.classList.add('loading');
     btn.textContent = 'Submitting…';
 
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT6asngaaLPrb2Z_oQmc8j-8XW9f2X13UVz1Vph6yla0FIvT_fEHDwQOREejNkEntj/exec';
-
     const payload = {
-      timestamp: new Date().toISOString(),
-      artworkTickets: parseInt(artwork),
-      cashOnHand: parseFloat(cash).toFixed(2),
-      complaints: complaints || 'None',
-      websiteInquiries: parseInt(document.getElementById('websiteInquiries').value) || 0
+      timestamp:           new Date().toISOString(),
+      artworkTickets:      parseInt(artwork),
+      cashOnHand:          parseFloat(cash).toFixed(2),
+      complaints:          document.getElementById('complaints').value.trim() || 'None',
+      websiteInquiries:    parseInt(document.getElementById('websiteInquiries').value) || 0,
+      largeOrderFollowups: parseInt(document.getElementById('largeOrderFollowups').value) || 0,
+      receivables60Day:    document.getElementById('receivables60Day').value.trim() || 'None',
+      overtimeHours:       document.getElementById('overtimeHours').value.trim() || 'None'
     };
 
     fetch(APPS_SCRIPT_URL, {
@@ -369,7 +414,7 @@
       btn.textContent = 'Submit Report';
       const t = new Date();
       document.getElementById('successTime').textContent =
-        `Logged at ${t.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+        `Logged at ${t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
       document.getElementById('successOverlay').classList.add('show');
     })
     .catch(err => {
@@ -380,10 +425,12 @@
   }
 
   function resetForm() {
-    document.getElementById('artworkTickets').value = '';
-    document.getElementById('cashOnHand').value = '';
-    document.getElementById('websiteInquiries').value = '';
-    document.getElementById('complaints').value = '';
+    ['artworkTickets','cashOnHand','websiteInquiries',
+     'largeOrderFollowups','receivables60Day','overtimeHours','complaints']
+      .forEach(id => {
+        const el = document.getElementById(id);
+        el.value = '';
+      });
     document.getElementById('successOverlay').classList.remove('show');
   }
 </script>
